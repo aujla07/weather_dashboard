@@ -37,14 +37,24 @@ $(".btn").on("click", async function(event){
     const currentWeatherResponse= await currentWeather(userinput)
     const fiveDayforecastResponse= await fiveDayforecast(userinput)
     const uvIndexResponse= await uvIndex(currentWeatherResponse.coord.lat,currentWeatherResponse.coord.lon)
+const currentWeatherIcon= `<img src="https://openweathermap.org/img/w/${currentWeatherResponse.weather[0].icon}.png" alt="${currentWeatherResponse.weather[0].icon}">`
+    
+const fiveDays=fiveDayforecastResponse.list.filter(function(day){
+    const time3pm=day.dt_txt.split(" ")[1]
+    return time3pm==="15:00:00"
+})
 
-    //display items
-    $("#current-temp").text(currentWeatherResponse.main.temp)
+//display items
+    $("#city-date").html(`${currentWeatherResponse.name} (${moment(currentWeatherResponse.dt*1000).format("L")})${currentWeatherIcon}`)
+    $("#current-temp").text(currentWeatherResponse.main.temp+"°F")
+    $("#humidity").text(currentWeatherResponse.main.humidity+"%")
+    $("#windspeed").text(currentWeatherResponse.wind.speed+" MPH")
+    $("#uvindex").text(uvIndexResponse.value)
 
 
-    console.log(currentWeatherResponse)
-    console.log(fiveDayforecastResponse)
-    console.log(uvIndexResponse)
+    // console.log(currentWeatherResponse)
+    console.log(fiveDays)
+    // console.log(uvIndexResponse)
     
 
 })
