@@ -50,6 +50,8 @@ const fiveDays=fiveDayforecastResponse.list.filter(function(day){
     $("#humidity").text(currentWeatherResponse.main.humidity+"%")
     $("#windspeed").text(currentWeatherResponse.wind.speed+" MPH")
     $("#uvindex").text(uvIndexResponse.value)
+    $("#5-day").text(fiveDayforecastResponse.weather)
+
 
 
     // console.log(currentWeatherResponse)
