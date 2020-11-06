@@ -2,7 +2,20 @@
 //     console.log("clicked")
 // })
 const API_KEY = "8b267c19ed20a20ec0f113d0fe760b1b"
-
+const cityLookup = []
+function cityList(arr) {
+    $("tbody").empty()
+    arr.map(function (city) {
+        $("tbody").append(`
+    <tr>
+    <td>
+        ${city}
+    </td>
+</tr>
+    `)
+    })
+}
+cityList(cityLookup)
 
 //current weather - this will make the API call - to get the current weather
 async function currentWeather(city) {
@@ -34,6 +47,11 @@ async function uvIndex(lat, lon) {
 
 $(".btn").on("click", async function (event) {
     var userinput = $("input").val()
+
+    cityLookup.push(userinput)
+    cityList(cityLookup)
+    console.log(cityLookup)
+
     const currentWeatherResponse = await currentWeather(userinput)
     const fiveDayforecastResponse = await fiveDayforecast(userinput)
     const uvIndexResponse = await uvIndex(currentWeatherResponse.coord.lat, currentWeatherResponse.coord.lon)
@@ -48,14 +66,14 @@ $(".btn").on("click", async function (event) {
 
         return `
     <div class="col">
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 8rem;">
         <div class="card-body">
-          <h5 class="card-title">${moment(day.dt * 1000).format("L")}</h5>
+          <h6 class="card-title">${moment(day.dt * 1000).format("L")}</h6>
           ${weatherIcon}
           <p class="card-text">
-              Temperature: ${day.main.temp + "°F"} 
+              Temp: ${Math.round(day.main.temp) + "°F"} 
               <br>
-              Humidity: ${day.main.humidity + "%"}
+              Hum: ${day.main.humidity + "%"}
           </p>
         </div>
       </div>
