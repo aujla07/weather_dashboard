@@ -17,6 +17,9 @@ function cityList(arr) {
 }
 cityList(cityLookup)
 
+localStorage.setItem("city", JSON.stringify(cityList));
+
+
 //current weather - this will make the API call - to get the current weather
 async function currentWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=imperial`
